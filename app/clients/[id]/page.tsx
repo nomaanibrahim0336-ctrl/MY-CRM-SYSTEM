@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
 import { getStage } from '@/lib/pipeline'
+import type { Project } from '@prisma/client'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import AddProjectButton from './AddProjectButton'
@@ -47,7 +48,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
           <p className="px-5 py-8 text-center text-gray-400 text-sm">No projects yet.</p>
         ) : (
           <div className="divide-y divide-gray-100">
-            {client.projects.map(p => {
+            {client.projects.map((p: Project) => {
               const stage = getStage(p.stage)
               return (
                 <div key={p.id} className="px-5 py-3 flex items-center justify-between hover:bg-gray-50">
