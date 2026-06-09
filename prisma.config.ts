@@ -1,8 +1,7 @@
 import "dotenv/config";
 import path from "path";
 import { defineConfig } from "prisma/config";
-import { PrismaLibSQL } from "@prisma/adapter-libsql";
-import { createClient } from "@libsql/client";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -12,10 +11,9 @@ export default defineConfig({
   datasource: {
     url: `file:${path.join(__dirname, "prisma/dev.db")}`,
     adapter: () => {
-      const client = createClient({
+      return new PrismaLibSql({
         url: `file:${path.join(__dirname, "prisma/dev.db")}`,
       });
-      return new PrismaLibSQL(client);
     },
-  },
+  } as any,
 });
